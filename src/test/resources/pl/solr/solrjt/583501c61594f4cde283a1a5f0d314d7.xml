@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<response> 
+ 
+<lst name="responseHeader"> 
+  <int name="status">0</int> 
+  <int name="QTime">4</int> 
+  <lst name="params">  
+    <str name="start">1</str> 
+    <str name="q">title</str> 
+    <str name="rows">20</str> 
+  </lst> 
+</lst> 
+<result name="response" numFound="2" start="1"> 
+  <doc>   
+    <str name="id">56A878B2063448C1510</str> 
+    <str name="description">Example Example</str> 
+    <str name="name">Example</str> 
+  </doc> 
+  <doc> 
+    <str name="id">56A878C206444881571</str>  
+    <str name="description">Example Example</str> 
+    <str name="name">Test</str>
+  </doc> 
+</result> 
+</response>

@@ -1,0 +1,8 @@
+Simple framework for testing applications with solrj code.
+
+USAGE
+
+Just use: 
+	pl.solr.solrjt.mock.ByExampleSolrServerMock 
+in place of:
+	org.apache.solr.client.solrj.SolrServer

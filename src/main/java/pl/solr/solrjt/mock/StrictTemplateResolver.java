@@ -12,7 +12,8 @@ public class StrictTemplateResolver implements TemplateResolver {
 
 	public String getFileBase(SolrRequest req) {
 		if (req instanceof UpdateRequest) {
-			return ((UpdateRequest) req).getDocuments().toString();
+			UpdateRequest up = (UpdateRequest) req;
+			return up.getDocuments().toString();
 		} else {
 			return req.getParams().toString();
 		}

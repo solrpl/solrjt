@@ -2,12 +2,15 @@ package pl.solr.solrjt.mock;
 
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.XMLResponseParser;
+import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.common.util.NamedList;
 
 public class ByExampleSolrServerMock extends SolrServer {
@@ -41,9 +44,27 @@ public class ByExampleSolrServerMock extends SolrServer {
 	@Override
 	public NamedList<Object> request(SolrRequest req)
 			throws SolrServerException, IOException {
-
-		String file = templateResolver.resolve(req);
-		InputStream stream = underTestClass.getResourceAsStream(file);
+		
+		Class<?> loader = underTestClass;
+		String file;
+		if (req instanceof UpdateRequest && ((UpdateRequest) req).getAction() != null) {
+			switch(((UpdateRequest) req).getAction()) {
+				case COMMIT:
+					file = "commit.xml";
+					loader = ByExampleSolrServerMock.class;
+					break;
+				case OPTIMIZE:
+					file = "optimize.xml";
+					loader = ByExampleSolrServerMock.class;
+					break;
+				default:
+					file = templateResolver.resolve(req);
+					break;
+			}
+		} else {
+			file = templateResolver.resolve(req);			
+		}
+		InputStream stream = loader.getResourceAsStream(file);
 		if (stream == null) {
 			fail("Response: " + file + " not found. You should define this file with response for request: "
 					+ templateResolver.getFileBase(req) + ". If this query is incorrect, you have some errors in tested code.");

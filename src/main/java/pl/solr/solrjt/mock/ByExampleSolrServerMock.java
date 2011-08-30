@@ -46,7 +46,7 @@ public class ByExampleSolrServerMock extends SolrServer {
 		InputStream stream = underTestClass.getResourceAsStream(file);
 		if (stream == null) {
 			fail("Response: " + file + " not found. You should define this file with response for request: "
-					+ req.getParams().toString() + ". If this query is incorrect, you have some errors in tested code.");
+					+ templateResolver.getFileBase(req) + ". If this query is incorrect, you have some errors in tested code.");
 		}
 		return templateParser.parse(stream);
 

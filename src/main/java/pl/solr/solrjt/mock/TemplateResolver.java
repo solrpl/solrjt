@@ -6,4 +6,6 @@ public interface TemplateResolver {
 
 	String resolve(SolrRequest req);
 
+	String getFileBase(SolrRequest req);
+
 }

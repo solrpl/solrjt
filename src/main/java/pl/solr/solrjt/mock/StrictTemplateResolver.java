@@ -7,13 +7,16 @@ import org.apache.solr.client.solrj.request.UpdateRequest;
 public class StrictTemplateResolver implements TemplateResolver {
 
 	public String resolve(final SolrRequest req) {
-		String fileBase;
-		if (req instanceof UpdateRequest) {
-			fileBase = ((UpdateRequest) req).getDocuments().toString();
-		} else {
-			fileBase = req.getParams().toString();
-		}
-		return DigestUtils.md5Hex(fileBase) + ".xml";
+		return DigestUtils.md5Hex(getFileBase(req)) + ".xml";
 	}
+
+	public String getFileBase(SolrRequest req) {
+		if (req instanceof UpdateRequest) {
+			return ((UpdateRequest) req).getDocuments().toString();
+		} else {
+			return req.getParams().toString();
+		}
+	}
+
 
 }
